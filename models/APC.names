@@ -1,0 +1,19 @@
+SS,PS,FS.
+docID: ignore.
+relID: ignore.
+sentID: ignore.
+tokID: ignore.
+dtID: ignore.
+TOK: text.
+POS: text.
+LEM: ignore.
+IOB: text.
+DEP: ignore.
+SCAT: ignore.
+PCAT: ignore.
+LSIB: ignore.
+RSIB: ignore.
+VN  : ignore.
+type: ignore.
+top_sense: ignore.
+sense: ignore.
