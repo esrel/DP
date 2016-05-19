@@ -2,10 +2,13 @@
 /***
  * Class to re-map 2D array with IDs
  *
- * @author 	: Evgeny A. Stepanov
- * @e-mail	: stepanov.evgeny.a@gmail.com
- * @date	: 2016-03-05
- * @version : 0.1
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 
 require_once 'ArrayUtilities.php';
@@ -71,5 +74,4 @@ class IdMapper extends ArrayUtilities {
 		}
 		return $out;
 	}
-
 }

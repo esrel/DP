@@ -5,20 +5,31 @@
  * Parameters:
  * -p (pdtb-)parse.json
  * -n output file names
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'JsonReaderParses.php';
-require 'DependencyReader.php';
+require 'lib/JsonReaderParses.php';
+require 'lib/DependencyReader.php';
 
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $args = getopt('p:n:');
 
-// Variables
+// Constants
 $sep = "\t";	// column separator
 $nov = '_';		// no value string
 
+// Classes
 $JRP = new JsonReaderParses();
 $DRR = new DependencyReader();
 

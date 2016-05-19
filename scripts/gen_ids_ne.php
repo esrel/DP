@@ -8,6 +8,14 @@
  *
  * -f PS ID pairs (joined output of gen_ids_ips & PS.A2)
  * -p sent.pairs  (from gen_ids_adjacent_pairs.php)
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 // Settings
 error_reporting(E_ALL);
@@ -21,11 +29,7 @@ $args = getopt('f:p:');
 $sep  = "\t";
 $pref = 'RN_';
 
-// Argument Parameters
-// Class Initializations
-// Variables
-/*--------------------------------------------------------------------*/
-
+//----------------------------------------------------------------------
 // read adjacent sentence pairs
 // wsj_2278  docID
 // 23        Arg1 sentID

@@ -14,10 +14,13 @@
  *    (1) segment-level  arrays [default]
  *    (2) document-level arrays: array of segment-level arrays
  *
- * @author 	: Evgeny A. Stepanov
- * @e-mail	: stepanov.evgeny.a@gmail.com
- * @date	: 2013-09-19
- * @version : 0.1 from 2013-09-18
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class IobTagger {
 
@@ -510,9 +513,14 @@ class IobTagger {
 		return array_filter(array($e1, $e2));
 	}
 }
-
-// Test Cases
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $IT = new IobTagger('IOB');
 
 $span  = array(2, 3, 5);

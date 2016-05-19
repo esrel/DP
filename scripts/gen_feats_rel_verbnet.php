@@ -5,18 +5,21 @@
  * -p sentence pairs   : as docID, relID, arg1_sentID, arg2_sentID
  * -l tagged sentences : verbnet features
  */
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $args = getopt('p:l:');
 
 // Constants
-$isep = '|';
-$sep = "\t";
+$sep  = "\t";
 $nov  = 'NULL';
+$isep = '|';
 $glue = '#';
 
+//----------------------------------------------------------------------
 // read sentence pairs
 $lines = array_map('trim', file($args['p']));
 $pairs = array();

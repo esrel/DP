@@ -15,14 +15,21 @@
  *      );
  *
  * Note: Punctuation is not part of dependency!
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class DependencyFeatures {
 
 	private $sep    = '/';
 	private $root   = 'root'; // for Main Verb
 	private $rootID = -1;
-	private $nov    = '_';
-	private $null   = 'NULL';
+	private $nov    = 'NULL';
 
 	// column ids
 	private $sID = 0; // token string column
@@ -196,7 +203,7 @@ class DependencyFeatures {
 	 * @return string $str
 	 */
 	private function getRoleToken($dep_arr, $func, $id = FALSE) {
-		$str = $this->null;
+		$str = $this->nov;
 		if (empty($dep_arr)) {
 			return $str;
 		}
@@ -284,10 +291,32 @@ class DependencyFeatures {
 			return FALSE;
 		}
 	}
-}
 
-// Test Cases
+	/**
+	 * Set Dependency Chain separator
+	 *
+	 * @param string $str
+	 */
+	public function setChainSeparator($str) {
+		$this->sep = $str;
+	}
+
+	/**
+	 * Set No-value string
+	 *
+	 * @param string $str
+	 */
+	public function setNoValue($str) {
+		$this->nov = $str;
+	}
+}
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
 $DEP = new DependencyFeatures();
 
 $dep_arr = array(

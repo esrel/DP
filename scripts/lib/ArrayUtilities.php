@@ -2,8 +2,13 @@
 /**
  * Class for array manipulation
  *
- * @author: Evgeny A. Stepanov
- * @email : stepanov.evgeny.a@gmail.com
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class ArrayUtilities {
 
@@ -402,9 +407,14 @@ class ArrayUtilities {
 	}
 
 }
-
-// Class Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $au = new ArrayUtilities();
 
 $a = array('d', 'a', 'b', 'b', 'c', 'd', 'd');
@@ -433,17 +443,21 @@ foreach (range(0, 10) as $dim) {
 }
 
 foreach (range(0, 5) as $dim) {
-	echo 'arrayFlattenToDimension:' . $dim . ': ' . json_encode($au->arrayFlattenToDimension($b, $dim)) . "\n";
+	echo 'arrayFlattenToDimension:' . $dim . ': ';
+	echo json_encode($au->arrayFlattenToDimension($b, $dim)) . "\n";
 }
 
 foreach (range(0, 5) as $dim) {
-	echo 'arrayExpandToDimension:' . $dim . ': ' . json_encode($au->arrayExpandToDimension($a, $dim)) . "\n";
+	echo 'arrayExpandToDimension:' . $dim . ': ';
+	echo json_encode($au->arrayExpandToDimension($a, $dim)) . "\n";
 }
 
 foreach (range(0, 5) as $dim) {
-	echo 'arrayExpand:' . $dim . ': ' . json_encode($au->arrayExpand($a, $dim)) . "\n";
+	echo 'arrayExpand:' . $dim . ': ';
+	echo json_encode($au->arrayExpand($a, $dim)) . "\n";
 }
-echo 'arrayFlattenRecursive: ' . json_encode($au->arrayFlattenRecursive($b)) . "\n";
+echo 'arrayFlattenRecursive: ';
+echo json_encode($au->arrayFlattenRecursive($b)) . "\n";
 echo 'is_flat: ';
 echo ($au->is_flat($b)) ? 'TRUE' : 'FALSE' . "\n";
 echo 'Dimension Counting: ' . $au->getDimension($b) . "\n";

@@ -6,6 +6,13 @@
  * - creates IOB-chain
  * - creates tag path between two nodes
  *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 require_once 'Tree.php';
 
@@ -130,10 +137,27 @@ class TreePath extends Tree {
 		}
 		return implode($this->u, array_reverse($arr));
 	}
-}
 
-// Test Cases:
+	/**
+	 * Set up and down glues for paths
+	 *
+	 * @param string $up
+	 * @param string $down
+	 */
+	public function setPathIndicators($up, $down) {
+		$this->u = $up;
+		$this->d = $down;
+	}
+
+}
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 // Test class for protected methods
 class TestTreePath extends TreePath {
 	public function test() {
@@ -167,7 +191,19 @@ class TestTreePath extends TreePath {
 	}
 }
 
-$parse = "( (S (NP (NP (JJ Influential) (NNS members)) (PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) (NNPS Means) (NNP Committee)))) (VP (VBD introduced) (NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (VB restrict) (SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) (JJ savings-and-loan) (NN bailout) (NN agency)) (VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) (, ,) (S (VP (VBG creating) (NP (NP (DT another) (JJ potential) (NN obstacle)) (PP (TO to) (NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) (PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )";
-$TT    = new TestTreePath($parse);
+$parse  = '( (S (NP (NP (JJ Influential) (NNS members)) ';
+$parse .= '(PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) ';
+$parse .= '(NNPS Means) (NNP Committee)))) (VP (VBD introduced) ';
+$parse .= '(NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) ';
+$parse .= '(S (VP (MD would) (VP (VB restrict) ';
+$parse .= '(SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) ';
+$parse .= '(JJ savings-and-loan) (NN bailout) (NN agency)) ';
+$parse .= '(VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) ';
+$parse .= '(, ,) (S (VP (VBG creating) (NP (NP (DT another) ';
+$parse .= '(JJ potential) (NN obstacle)) (PP (TO to) ';
+$parse .= "(NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) ";
+$parse .= '(PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )';
+
+$TT     = new TestTreePath($parse);
 $TT->test();
 */

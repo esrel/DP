@@ -2,10 +2,6 @@
 /**
  * Set of functions for Confusion Matrix based evaluation
  *
- * @author 	Evgeny A. Stepanov
- * @date	2014-02-01
- * @version	0.1
- *
  * Confusion Matrix:
  *
  *      |    REF    |
@@ -52,7 +48,13 @@
  * FM	: F-Measure
  * F1	= (2 * P * R) / (P + R)
  *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
  *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class ConfusionMatrix  {
 
@@ -310,9 +312,14 @@ class ConfusionMatrix  {
 	}
 
 }
-
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $args = getopt('h:r:');
 
 $CM = new ConfusionMatrix();

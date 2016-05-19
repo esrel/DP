@@ -6,8 +6,13 @@
  *   Implements 'trim'-like beahavior:
  *      removing only leading and trailing punctuation
  *
- * @author Evgeny A. Stepanov
- * @e-mail stepanov.evgeny.a@gmail.com
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class RmPunct {
 
@@ -143,9 +148,14 @@ class RmPunct {
 		}
 	}
 }
-
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $args = getopt('f:');
 $str = '-LRB- " The cat , black-white , is on the mat . " ';
 $arr = preg_split('/\s/u', $str, -1, PREG_SPLIT_NO_EMPTY);
@@ -156,4 +166,3 @@ echo $PRM->removePunctuation($str, TRUE) . "\n";
 print_r($PRM->removePunctuation($arr));
 print_r($PRM->removePunctuation($arr, TRUE));
 */
-

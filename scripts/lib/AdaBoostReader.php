@@ -7,7 +7,13 @@
  *  2. validation for data & names
  *  3. ngram, sgram, fgram features
  *
- * @author: Evgeny A. Stepanov
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL License v. 3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class AdaBoostReader {
 
@@ -89,7 +95,8 @@ class AdaBoostReader {
 					if ($f != '') {
 						list($name, $type) = $this->fdefs[$k];
 						if ($type == 'text') {
-							$vals = preg_split('/\s/u', $f,	-1, PREG_SPLIT_NO_EMPTY);
+							$vals = preg_split('/\s/u', $f,
+											   -1, PREG_SPLIT_NO_EMPTY);
 							$tmp[$name] = $vals;
 							if ($lex) { // learn features
 								$this->feats[$name] = array_merge($this->feats[$name], $vals);
@@ -244,7 +251,8 @@ class AdaBoostReader {
 				if ($this->ftypes[$name] == 'text') {
 					foreach ($f as $e) {
 						if (isset($this->feats[$name][$e])) {
-							$ind = $this->fmax * $vids[$name] + $this->feats[$name][$e] + 1;
+							$ind = $this->fmax * $vids[$name]
+							     + $this->feats[$name][$e] + 1;
 							$fout[$ind] = 1;
 						}
 
@@ -271,7 +279,8 @@ class AdaBoostReader {
 	 * @param file $dev   dev   file
 	 * @param file $test  test  file
 	 */
-	public function adaBoost2svm($names, $data, $dev = NULL, $test = NULL, $ext = '.svm') {
+	public function adaBoost2svm($names, $data, $dev = NULL,
+	                             $test = NULL, $ext = '.svm') {
 
 		$this->parseNames($names);
 
@@ -306,14 +315,25 @@ class AdaBoostReader {
 	}
 
 }
-
-// Test Cases
+//======================================================================
+// Example Usage
+//======================================================================
 /*
-ini_set('memory_limit', -1);
-$args = getopt('n:o:d:e:t');
-$AB = new AdaBoostReader();
+    -n names  file
+    -o output file
+    -d data   file
+    -t test   file (for SVM)
+    -e dev    file (for SVM)
 */
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
+$args = getopt('n:o:d:e:t');
+
+$AB = new AdaBoostReader();
+
 $AB->parseNames($args['n']);
 //print_r($AB->getFeatureTypes());
 //print_r($AB->getDecisions($args['o'], $args['n']));
@@ -326,7 +346,6 @@ list($vec, $lvec) = $AB->vectorize($data, $lbl);
 //print_r($data);
 echo json_encode($lvec) . "\n";
 print_r($vec);
-*/
 
 //$AB->adaBoost2svm($args['n'], $args['d'], $args['e'], $args['t']);
-
+*/

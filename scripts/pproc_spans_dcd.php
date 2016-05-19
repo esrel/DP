@@ -5,37 +5,25 @@
  * ---------------------------------------------------------------------
  * TODO:
  *  1. Handle 'mirrored' connectives (e.g. if..if..then)
- * ---------------------------------------------------------------------
- *
- * Copyright 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- *
- * ---------------------------------------------------------------------
  *
  * Post-process output of proc_conll.php for connectives
  *
  * -f output of proc_conll.php
  * -t token-level features file
  * -r character normalization table [optional]
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 // required or includes
-require 'IdMapper.php';
-require 'ConllReader.php';
-require 'CharNormalizer.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+require 'lib/CharNormalizer.php';
 
 // Error & Memory Settings
 error_reporting(E_ALL);

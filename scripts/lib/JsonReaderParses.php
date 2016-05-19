@@ -2,6 +2,8 @@
 /**
  * Reads PDTB-parse JSON into array
  *
+ * (CoNLL 2015/2016 Shared Task on Shallow Discourse Parsing)
+ *
  * =====
  * JSON Schema for parses
  * =====
@@ -31,6 +33,14 @@
  * 	},
  * "DocID": {...}
  * }
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class JsonReaderParses {
 

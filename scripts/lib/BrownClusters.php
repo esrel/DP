@@ -4,6 +4,14 @@
  * @author estepanov
  *
  * Requires Cluster file
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class BrownClusters {
 
@@ -16,17 +24,18 @@ class BrownClusters {
 	 */
 	function __construct($file, $prefix) {
 		$file_arr = array_map('trim', file($file));
-		
+
 		foreach ($file_arr as $line) {
 			$l = trim($line);
-			
+
 			if ($l != '') {
 				$la = explode("\t", $l);
-				$this->map[$la[1]] = 'BC-' . bindec(str_pad($la[0], $prefix, '0', STR_PAD_RIGHT));
+				$vl = str_pad($la[0], $prefix, '0', STR_PAD_RIGHT);
+				$this->map[$la[1]] = 'BC-' . bindec($vl);
 			}
 		}
 	}
-	
+
 	/**
 	 * Get cluster for token
 	 * @param  string $str

@@ -9,21 +9,27 @@
  *
  * --rm_partial	remove partial senses
  * --sense		[1|2] take 1st/2nd sense only (if more than 1)
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'IdMapper.php';
-require 'ConllReader.php';
-require 'CharNormalizer.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+require 'lib/CharNormalizer.php';
 
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $longopts = array('rm_partial', 'sense:');
 $args = getopt('f:s:r:l:', $longopts);
-
-$IDM = new IdMapper(FALSE);
-$CFR = new ConllReader();
-$CNR = new CharNormalizer();
 
 // Constants:
 $isep = ',';     // separator for senses (input)
@@ -32,6 +38,11 @@ $osep = ',';     // output field separator
 $inov = 'NULL';  // no value in input
 $onov = NULL;    // no value in output
 $pref = 'RE_';   // relation ID prefix
+
+// Classes
+$IDM = new IdMapper(FALSE);
+$CFR = new ConllReader();
+$CNR = new CharNormalizer();
 
 // set character normalization, if provided
 if (isset($args['r'])) {
@@ -50,6 +61,7 @@ $sense_list = (isset($args['l']))
 $rmp = (isset($args['rm_partial'])) ? TRUE : FALSE;
 $snp = (isset($args['sense'])) ? intval($args['sense']) - 1 : FALSE;
 
+//----------------------------------------------------------------------
 // read sense file (labels)
 /*
  * wsj_2201					docID
@@ -122,9 +134,15 @@ foreach ($lines as $line) {
 	}
 }
 
+//----------------------------------------------------------------------
+// Functions
+//----------------------------------------------------------------------
 
 /**
  * Get unique list of top senses
+ *
+ * @param  array $arr
+ * @return array $out
  */
 function get_top_senses($arr) {
 	$out = array();
@@ -137,6 +155,11 @@ function get_top_senses($arr) {
 
 /**
  * Remove partial senses
+ *
+ * @param array $arr
+ * @param array $senses
+ *
+ * @return array
  */
 function rm_partial_senses($arr, $senses) {
 	if ($senses === NULL) {

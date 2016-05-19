@@ -10,12 +10,20 @@
  * -r character replacement table (for icsi)     [optional]
  *
  * -- last column is the label column
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'IobTagger.php';
-require 'IobReader.php';
-require 'IdMapper.php';
-require 'ConllReader.php';
-require 'CharNormalizer.php';
+require 'lib/IobTagger.php';
+require 'lib/IobReader.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+require 'lib/CharNormalizer.php';
 
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);

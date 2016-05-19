@@ -6,6 +6,14 @@
  *  - single word
  *  - space separated
  *  - '..' separated to indicate discontinuous spans
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 
 require_once 'Indexer.php';
@@ -15,22 +23,33 @@ class LexiconTagger extends Indexer {
 	private $lex;         // lexicon
 	private $regex;       // regex
 	private $tags;        // tags
-	private $isep = ' ';  // separator/glue for multiword entries (input)
-	private $osep = '_';  // separator/glue for multiword entries (tag)
-	private $dsep = '..'; // separator/glue for discontinuous entries
+
+	// Local
 	private $dere = '.*';
-	private $tsep = '#';  // separator/glue for tagging with IDs
-	private $onov = 0;
-	private $xsep = ',';
+
+	// Input Lexicon Separators
+	private $mws  = ' ';  // separator/glue for multiword     entries
+	private $dws  = '..'; // separator/glue for discontinuous entries
+
+	private $tsep = '_';  // separator/glue for multiword entries (tag)
+
+	// string tag definitions
+	private $isep = '#';  // separator/glue for tagging with IDs
+	private $lsep = ',';  // separator/glue for tag list
+	private $nov  = 0;    // no value
 
 	/**
 	 * Constructor: sets lexicon for tagging, if provided
 	 *
 	 *    (without lexicon, class used for parsing tags only)
 	 *
-	 * @param file $file
+	 * @param file   $file  lexicon file
+	 * @param string $mws   multi-word entity glue/separator
+	 * @param string $dws   discountinuous entity glue/separator
+	 * @param string $tsep  tag space separator
 	 */
-	public function __construct($file = NULL) {
+	public function __construct($file = NULL, $mws = ' ', $dws = '..',
+								$tsep = '_') {
 		if ($file) {
 			// lowercase all lexicon
 			$lex = array_map('strtolower', array_map('trim', file($file)));
@@ -41,6 +60,11 @@ class LexiconTagger extends Indexer {
 			$this->regex = array_map(array($this, 'mkRegEx'), $this->lex);
 			$this->tags  = array_map(array($this, 'mkTag'), $this->lex);
 		}
+
+		// set separators
+		$this->mws  = $mws;
+		$this->dws  = $dws;
+		$this->tsep = $tsep;
 	}
 
 	/**
@@ -51,8 +75,8 @@ class LexiconTagger extends Indexer {
 	 */
 	private function mkRegEx($str) {
 
-		$dre = '/' . preg_quote($this->dsep) . '/u';
-		$mre = '/' . preg_quote($this->isep) . '/u';
+		$dre = '/' . preg_quote($this->dws) . '/u';
+		$mre = '/' . preg_quote($this->mws) . '/u';
 		$gsep   = '\b).*(\b';
 
 		$re = $str;
@@ -71,9 +95,9 @@ class LexiconTagger extends Indexer {
 	 */
 	private function mkTag($str) {
 
-		$mre = '/' . preg_quote($this->isep) . '/u';
+		$mre = '/' . preg_quote($this->mws) . '/u';
 
-		return preg_replace($mre, $this->osep , $str);
+		return preg_replace($mre, $this->tsep , $str);
 	}
 
 	/**
@@ -84,19 +108,21 @@ class LexiconTagger extends Indexer {
 	 * @return array $arr
 	 */
 	public function tag($input, $bool = TRUE) {
+
 		$reg_arr = $this->regex;
 		$tag_arr = $this->tags;
-		$dre     = '/' . preg_quote($this->dsep) . '/u';
+		$dre     = '/' . preg_quote($this->dws) . '/u';
 
 		// convert input to lowercased string, index tokens
 		if (is_array($input)) {
-			$str = implode($this->isep, $input);
+			$str = implode($this->mws, $input);
 			$ind = $this->indexTokens($str, $input);
 		}
 		else {
 			$str = $input;
 			$ind = $this->indexTokens($str);
 		}
+
 		$str = strtolower($str);
 		// set all tokens as not in lexicon
 		$arr = array_fill(0, count($ind), array());
@@ -106,7 +132,8 @@ class LexiconTagger extends Indexer {
 		foreach ($reg_arr as $k => $regex) {
 			// required to handle 'mirrored' items w/ shared parts
 			if (preg_match($dre, $tag_arr[$k])) {
-				preg_match_all($regex, $str, $matches, PREG_OFFSET_CAPTURE);
+				preg_match_all($regex, $str, $matches,
+							   PREG_OFFSET_CAPTURE);
 				$cnt = 0;
 				while (!empty($matches[0])) {
 					$parts = array_slice($matches, 1);
@@ -119,12 +146,14 @@ class LexiconTagger extends Indexer {
 							$match_arr[$k][$cnt][$pk] = $m;
 						}
 					}
-					preg_match_all($regex, $str, $matches, PREG_OFFSET_CAPTURE, $off);
+					preg_match_all($regex, $str, $matches,
+								   PREG_OFFSET_CAPTURE, $off);
 					$cnt++;
 				}
 			}
 			else {
-				preg_match_all($regex, $str, $matches, PREG_OFFSET_CAPTURE);
+				preg_match_all($regex, $str, $matches,
+							   PREG_OFFSET_CAPTURE);
 				if (!empty($matches[0])) {
 					$parts = array_slice($matches, 1);
 					// remap
@@ -142,6 +171,7 @@ class LexiconTagger extends Indexer {
 		foreach ($match_arr as $k => $e) {  // lexical entries
 			foreach ($e as $km => $m) {     // matches
 				$tok_ids = array();
+
 				foreach ($m as $pk => $p) { // parts
 					list($tok, $beg) = $p;
 					$end = $beg + strlen($tok);
@@ -151,11 +181,12 @@ class LexiconTagger extends Indexer {
 						}
 					}
 				}
+
 				foreach ($tok_ids as $tokID) {
 					$tmp   = array($tag_arr[$k]);
-					$tmp[] = implode($this->xsep, $tok_ids);
+					$tmp[] = implode($this->lsep, $tok_ids);
 					$tmp[] = $id;
-					$arr[$tokID][] = implode($this->tsep, $tmp);
+					$arr[$tokID][] = implode($this->isep, $tmp);
 				}
 				$id++;
 			}
@@ -167,7 +198,7 @@ class LexiconTagger extends Indexer {
 				$arr[$tokID] = (!empty($e)) ? 1 : 0;
 			}
 			else {
-				$arr[$tokID] = (!empty($e)) ? $e : array($this->onov);
+				$arr[$tokID] = (!empty($e)) ? $e : array($this->nov);
 			}
 		}
 
@@ -176,19 +207,20 @@ class LexiconTagger extends Indexer {
 
 	/**
 	 * Parse string annotation into an array of components
+	 *
 	 * @param  string $str
 	 * @return array
 	 */
 	public function parseTag($str) {
-		$arr = explode($this->tsep, $str);
+		$arr = explode($this->isep, $str);
 		if (count($arr) == 1) {
 			return $str;
 		}
 		else {
-			$ta = explode($this->xsep, $arr[1]);
+			$ta = explode($this->lsep, $arr[1]);
 			$wa = explode(' ' ,
 				str_replace(
-					array($this->dsep, $this->osep),
+					array($this->dws, $this->mws),
 					array(' ' , ' '),
 					$arr[0]));
 			return array($arr[0], $ta, $wa, $arr[2]);
@@ -204,11 +236,34 @@ class LexiconTagger extends Indexer {
 		return $this->lex;
 	}
 
-}
+	/**
+	 * Set tag list separator and id separator strings
+	 *
+	 * @param string $lsep  list separator
+	 * @param string $isep  id   separator
+	 */
+	public function setIndexSeparators($lsep, $isep) {
+		$this->lsep = $lsep;
+		$this->isep = $isep;
+	}
 
-// Test Cases:
+	/**
+	 * Set no value string
+	 *
+	 * @param string $nov
+	 */
+	public function setNoValue($nov) {
+		$this->nov = $nov;
+	}
+}
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
 ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $args = getopt('f:');
 
 $LTG = new LexiconTagger($args['f']);

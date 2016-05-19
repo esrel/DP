@@ -1,10 +1,19 @@
 <?php
 /**
- * CoNLL 2016 Shared Task Paragraph Indexing
+ * Paragraph Indexing
  *
  * -r raw documents
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'Indexer.php';
+
+require 'lib/Indexer.php';
 
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
@@ -18,7 +27,7 @@ $col_sep = "\t";
 
 $IND = new Indexer();
 
-// Ger docID from file name
+// Get docID from file name
 $t0 = explode('/', $args['r']);
 $t1 = explode('.', $t0[count($t0) - 1]);
 $docID = $t1[0];

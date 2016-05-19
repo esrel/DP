@@ -5,16 +5,27 @@
  *
  * -p paragraph   offset file
  * -t token-level offset file
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $args = getopt('p:t:');
 
-// Variables
+// Constants
 $sep = "\t";
 
+//----------------------------------------------------------------------
 // Read token IDs
 $ids_tmp = read_col_file($args['t']);
 $par_tmp = read_col_file($args['p']);
@@ -67,8 +78,16 @@ foreach ($pairs as $docID => $doc) {
 	}
 }
 
+
+//----------------------------------------------------------------------
+// Functions
+//----------------------------------------------------------------------
 /**
  * Read IDs file
+ *
+ * @param  file   $file
+ * @param  string $sep column separator
+ * @return array  $arr
  */
 function read_col_file($file, $sep = "\t") {
 	$lines = array_map('trim', file($file));

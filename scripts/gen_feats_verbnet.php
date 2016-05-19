@@ -13,26 +13,37 @@
  * -f token-per-line file (CoNLL) : lemma
  * -l VerbNet file
  *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'IdMapper.php';
-require 'ConllReader.php';
-require 'VerbNet.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+require 'lib/VerbNet.php';
 
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $args = getopt('f:l:');
 
 // Constants
-$nov = 'NULL';
-$sep = "\t";
+$sep  = "\t";
+$nov  = 'NULL';
 $isep = '|';
 
+// Classes
 $IDM = new IdMapper(FALSE);
 $CFR = new ConllReader();
 $LEX = new VerbNet($args['l']);
 
+//----------------------------------------------------------------------
 // Data
 // Read Document/Token IDs into document-level array
 $row_arr = $IDM->arrayFlatten($CFR->conllRead($args['f']));

@@ -2,8 +2,13 @@
 /***
  * Variour syntactic constituency tree methods/features
  *
- * @author Evgeny A. Stepanov
- * @e-mail stepanov.evgeny.a@gmail.com
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 require_once 'TreePath.php';
 
@@ -183,7 +188,12 @@ class SyntacticTreeFeatures extends TreePath {
 	private function getSubArray($arr, $sub) {
 		$out = array();
 		$tmp = array();
-		for ($i=0,$j=0; $i<count($arr);) {
+		for ($i = 0, $j = 0; $i < count($arr);) {
+
+			if (!isset($sub[$j])) {
+				$j = 0;
+			}
+
 			if ($arr[$i] == $sub[$j]) {
 				$tmp[$i] = $arr[$i];
 				$i++;
@@ -201,10 +211,27 @@ class SyntacticTreeFeatures extends TreePath {
 		return $out;
 	}
 }
-
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
-$parse = "( (S (NP (NP (JJ Influential) (NNS members)) (PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) (NNPS Means) (NNP Committee)))) (VP (VBD introduced) (NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (VB restrict) (SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) (JJ savings-and-loan) (NN bailout) (NN agency)) (VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) (, ,) (S (VP (VBG creating) (NP (NP (DT another) (JJ potential) (NN obstacle)) (PP (TO to) (NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) (PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )";
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
+$parse  = '( (S (NP (NP (JJ Influential) (NNS members)) ';
+$parse .= '(PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) ';
+$parse .= '(NNPS Means) (NNP Committee)))) (VP (VBD introduced) ';
+$parse .= '(NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) ';
+$parse .= '(S (VP (MD would) (VP (VB restrict) ';
+$parse .= '(SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) ';
+$parse .= '(JJ savings-and-loan) (NN bailout) (NN agency)) ';
+$parse .= '(VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) ';
+$parse .= '(, ,) (S (VP (VBG creating) (NP (NP (DT another) ';
+$parse .= '(JJ potential) (NN obstacle)) (PP (TO to) ';
+$parse .= "(NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) ";
+$parse .= '(PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )';
+
 $STF   = new SyntacticTreeFeatures($parse);
 //$input = 'and';
 //$input = 'Influential members';
@@ -230,4 +257,3 @@ foreach ($nodes as $k => $arr) {
 	echo "\n";
 }
 */
-

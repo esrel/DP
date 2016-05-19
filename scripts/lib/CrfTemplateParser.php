@@ -19,7 +19,13 @@
  * U07_3b1:%x[-1,7]/%x[0,7]/%x[1,7]
  * U07_3c0:%x[0,7]/%x[1,7]/%x[2,7]
  *
- * @author: Evgeny A. Stepanov
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class CrfTemplateParser {
 
@@ -32,11 +38,15 @@ class CrfTemplateParser {
 
 	/**
 	 * Constructor: sets
+	 *  - row & column separator
 	 *  - feature string
 	 *  - part separator
 	 *  - name separator
 	 */
-	public function __construct($psep = NULL, $nsep = NULL, $fstr = NULL) {
+	public function __construct($isep = NULL, $psep = NULL,
+								$nsep = NULL, $fstr = NULL) {
+
+		$this->isep = ($isep) ? $isep : $this->isep;
 		$this->psep = ($psep) ? $psep : $this->psep;
 		$this->nsep = ($nsep) ? $nsep : $this->nsep;
 		$this->fstr = ($fstr) ? $fstr : $this->fstr;
@@ -107,10 +117,24 @@ class CrfTemplateParser {
 	public function getTemplate() {
 		return $this->template;
 	}
+
+	/**
+	 * Set missing value string
+	 *
+	 * @param string $str
+	 */
+	public function setNoValue($str) {
+		$this->nov = $str;
+	}
 }
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
 ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $args = getopt('t:d:');
 
 require 'ConllReader.php';

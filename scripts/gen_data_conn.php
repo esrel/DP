@@ -9,15 +9,25 @@
  *
  * --rm_partial	remove partial senses
  * --sense		[1|2] take 1st/2nd sense only (if more than 1)
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'IdMapper.php';
-require 'ConllReader.php';
-require 'CharNormalizer.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+require 'lib/CharNormalizer.php';
 
+// settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// arguments
 $longopts = array('rm_partial', 'sense:');
 $args = getopt('s:t:r:l:', $longopts);
 
@@ -47,7 +57,7 @@ else {
 	$CNR->setPairs(array());
 }
 
-/*--------------------------------------------------------------------*/
+//----------------------------------------------------------------------
 // read allowed senses list, if provided
 $sense_list = (isset($args['l']))
 			  ? array_map('trim', file($args['l']))
@@ -134,6 +144,9 @@ if (isset($args['s']) && isset($args['t'])) {
 	}
 }
 
+//----------------------------------------------------------------------
+// Functions
+//----------------------------------------------------------------------
 /**
  * Get unique list of top senses
  * @param  array $arr

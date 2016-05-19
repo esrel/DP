@@ -12,31 +12,41 @@
  *
  * --ips extact data for evaluation, including all IPS spans
  * --rmm remove multi-sentence spans
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'JsonReaderData.php';
-require 'IobTagger.php';
-require 'IobReader.php';
-require 'IdMapper.php';
-require 'ConllReader.php';
 
+// requires & includes
+require 'lib/JsonReaderData.php';
+require 'lib/IobTagger.php';
+require 'lib/IobReader.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
+
+// Error Reporting & Memory Limit
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $longopts = array('ips', 'rmm');
 $args = getopt('f:n:t:', $longopts);
 
+// Class Initializations
 $JRD = new JsonReaderData();
 $IOB = new IobTagger('IOBE');
 $ITR = new IobReader();
 $IDM = new IdMapper(FALSE);
 $CFR = new ConllReader();
 
-/* Constants */
-$otag = 'O';
-$nov  = '_';
-$sep  = "\t";
-
+/*--------------------------------------------------------------------*/
+// Constants
 $lbls = array(
 	'Connective' => 'CONN',
 	'Arg1'       => 'ARG1',
@@ -58,6 +68,7 @@ foreach ($keys as $k) {
 	$fn_arr[$k] = $fn . '.' . $k . '.lbl';
 }
 
+/*--------------------------------------------------------------------*/
 $ot_arr = array(); // output array for tags
 
 // Read Document/Token IDs into document-level array

@@ -7,7 +7,13 @@
  *  - converts unicode quotes & dashes to ASCII
  *  - converts PTB replacements back to ASCII
  *
- * @author: Evgeny A. Stepanov
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 class CharNormalizer {
 
@@ -126,9 +132,14 @@ class CharNormalizer {
 		$this->setPairs($pairs);
 	}
 }
-
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 $args = getopt('f:');
 $CN = new CharNormalizer();
 

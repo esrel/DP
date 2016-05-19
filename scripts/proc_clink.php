@@ -4,9 +4,17 @@
  *
  * -t token offset file
  * -f chunklink output
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
-require 'IdMapper.php';
-require 'ConllReader.php';
+require 'lib/IdMapper.php';
+require 'lib/ConllReader.php';
 
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
@@ -23,7 +31,7 @@ $IDM = new IdMapper(FALSE);
 $CFR = new ConllReader();
 
 // read in clink_arr
-$clink_arr = array();
+$clink_arr      = array();
 $clink_file_arr = file($args['f']);
 
 // Sentence IDs start from 1

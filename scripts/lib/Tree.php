@@ -4,14 +4,19 @@
  *
  * requires flat & clean parse trees (use ParseTreeUtilities)
  *
- * @author Evgeny A. Stepanov
- * @e-mail stepanov.evgeny.a@gmail.com
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
 
 /**
  * Generic Node
  */
- class Node {
+class Node {
 
  	public $id;       // unique ID
  	public $tag;      // string
@@ -38,12 +43,12 @@
 
  		return $this;
  	}
- }
+}
 
- /**
-  * Tree Class Methods
-  */
- class Tree {
+/**
+ * Tree Class Methods
+ */
+class Tree {
 
  	protected $root = 'ROOT'; // default root tag
  	protected $tree;
@@ -381,10 +386,16 @@
  	public function getTags() {
  		return $this->getTerminalTags();
  	}
- }
+}
 
-// Test Cases:
+//======================================================================
+// Example Usage
+//======================================================================
 /*
+error_reporting(E_ALL);
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+
 // For testing protected methods
 class TestTree extends Tree {
 	public function test() {
@@ -423,7 +434,19 @@ class TestTree extends Tree {
 	}
 }
 
-$parse = "( (S (NP (NP (JJ Influential) (NNS members)) (PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) (NNPS Means) (NNP Committee)))) (VP (VBD introduced) (NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) (S (VP (MD would) (VP (VB restrict) (SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) (JJ savings-and-loan) (NN bailout) (NN agency)) (VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) (, ,) (S (VP (VBG creating) (NP (NP (DT another) (JJ potential) (NN obstacle)) (PP (TO to) (NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) (PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )";
+$parse  = '( (S (NP (NP (JJ Influential) (NNS members)) ';
+$parse .= '(PP (IN of) (NP (DT the) (NNP House) (NNPS Ways) (CC and) ';
+$parse .= '(NNPS Means) (NNP Committee)))) (VP (VBD introduced) ';
+$parse .= '(NP (NP (NN legislation)) (SBAR (WHNP (WDT that)) ';
+$parse .= '(S (VP (MD would) (VP (VB restrict) ';
+$parse .= '(SBAR (WHADVP (WRB how)) (S (NP (DT the) (JJ new) ';
+$parse .= '(JJ savings-and-loan) (NN bailout) (NN agency)) ';
+$parse .= '(VP (MD can) (VP (VB raise) (NP (NN capital))))))))))) ';
+$parse .= '(, ,) (S (VP (VBG creating) (NP (NP (DT another) ';
+$parse .= '(JJ potential) (NN obstacle)) (PP (TO to) ';
+$parse .= "(NP (NP (NP (DT the) (NN government) (POS 's)) (NN sale)) ";
+$parse .= '(PP (IN of) (NP (JJ sick) (NNS thrifts))))))))) (. .)) )';
+
 $tree  = new Tree($parse);
 
 // Print parse tree: same as input + ROOT
@@ -436,5 +459,4 @@ echo json_encode($tree->getTags()) . "\n";
 // protected method tests
 $TT = new TestTree($parse);
 $TT->test();
-
 */

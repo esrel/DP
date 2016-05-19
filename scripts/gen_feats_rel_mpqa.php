@@ -5,17 +5,28 @@
  * -p sentence pairs   : as docID, relID, arg1_sentID, arg2_sentID
  * -l tagged sentences : mpqa sentence level features
  * -t feature ID
+ *
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2016 Evgeny A. Stepanov <stepanov.evgeny.a@gmail.com>
+ * Copyright (c) 2016 University of Trento - SIS Lab <sislab@unitn.it>
+ *
+ * For non-commercial and research purposes the code is released under
+ * the LGPL v3.0. For commercial use, please contact us.
+ * ---------------------------------------------------------------------
  */
+// Settings
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
 ini_set('display_errors', 1);
 
+// Arguments
 $args = getopt('p:l:t:');
 
 // Constants
 $sep  = "\t";
 $glue = '#';
 
+//----------------------------------------------------------------------
 // set feature ID
 $id = (isset($args['t'])) ? intval($args['t']) : 0;
 
@@ -29,7 +40,7 @@ foreach ($lines as $line) {
 	}
 }
 
-// read verbnet features
+// read features
 $lines   = array_map('trim', file($args['l']));
 $pol_arr = array();
 foreach ($lines as $line) {
