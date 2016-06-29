@@ -24,7 +24,7 @@
  * NPV	: Negative Predictive Value
  * NPV	= FN / HN	= TN / (TN + FN)
  *
- * TPR	: True Positive Rate | Sensitivity| Recall [R]
+ * TPR	: True Positive Rate | Sensitivity | Recall [R]
  * R	= TP / RP	= TP / (TP + FN)
  *
  * TNR	: True Negative Rate | Specificity
